@@ -1,7 +1,7 @@
 class Solution {
 public:
     int n;
-    int t[501][501];
+    int t[501][501]; 
     int solve(vector<int> &nums, int i, int j){
 		if(i > j)
 			return 0;
@@ -13,23 +13,24 @@ public:
                 temp *= nums[i + 1];
             return temp;
         }
-		if(t[i][j] != -1)  
+		if(t[i][j] != -1) 
 			return t[i][j];
         int ans = 0;
-
+		
+		
         for(int k = i; k <= j; k++){
+		
+		    
             int temp = nums[k];
 			
-            if(j + 1 < n)  // As balloon j + 1 will become adjacent to k after bursting  k + 1 to j balloons
+            if(j + 1 < n)  
                 temp *= nums[j + 1];
 				
-            if(i - 1 >= 0) // As balloon i- 1 will become adjacent to k after bursting  i  to k -1 balloons
+            if(i - 1 >= 0) 
                 temp *= nums[i - 1];
-				
-			// Recursively solve the left and right subproblems and add their contribution
-            temp += (solve(nums, i, k - 1) + solve(nums, k + 1, j));
+ temp += (solve(nums, i, k - 1) + solve(nums, k + 1, j));
 			
-			// If this choice of k yields a better answer
+			
             ans = max(ans, temp);
         }
         return t[i][j] = ans;
@@ -38,14 +39,14 @@ public:
     int maxCoins(vector<int>& nums) {
         memset(t, -1, sizeof(t));
 		
-        // Insert two dummy balloons of value 1 to handle the balloons on the corner.
+        
 		vector<int> arr = {1};
         for(int x: nums) 
 			arr.push_back(x);
         arr.push_back(1);
         n = arr.size();
 		
-		//Start from i = 1 and j = arr.size() - 2 since first and last balloons are dummy.
-        return solve(arr, 1, arr.size() - 2);
-    }
+		
+        return solve(arr, 1, arr.size() - 2);
+    }
 };
