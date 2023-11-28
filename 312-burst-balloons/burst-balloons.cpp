@@ -1,12 +1,11 @@
 class Solution {
 public:
     int n;
-    int t[501][501]; // For memoization
+    int t[501][501];
     int solve(vector<int> &nums, int i, int j){
-		// BASE CASES
 		if(i > j)
 			return 0;
-        if(i == j){    // Only one element exists
+        if(i == j){   
             int temp = nums[i];
             if(i - 1 >= 0)  
                 temp *= nums[i - 1];
@@ -14,15 +13,11 @@ public:
                 temp *= nums[i + 1];
             return temp;
         }
-		if(t[i][j] != -1)  // Check if the solution is already stored for this subproblem
+		if(t[i][j] != -1)  
 			return t[i][j];
         int ans = 0;
-		
-		// For all elements in the range i to j, we choose all of them one by one 
-		// to make them the last balloon to be burst. 
+
         for(int k = i; k <= j; k++){
-		
-		    // Burst the kth balloon after bursting (i, k - 1) and (k + 1, j) balloons
             int temp = nums[k];
 			
             if(j + 1 < n)  // As balloon j + 1 will become adjacent to k after bursting  k + 1 to j balloons
